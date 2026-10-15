@@ -5,7 +5,7 @@
     "name": "tuzhechen2005"
   },
   "metadata": {
-    "description": "Video-making skills for Claude Opus 5.5 in Claude Code: every frame and every note generated in code, one skill per visual style."
+    "description": "A hand-painted animation skill for Claude Opus 5.5 in Claude Code, with code-generated frames, music-video storyboarding and lyric sync."
   },
   "plugins": [
     {
@@ -17,16 +17,6 @@
       "category": "design",
       "keywords": ["animation", "watercolour", "lyric-video", "music-video", "p5js"],
       "homepage": "https://github.com/tuzhechen2005/opus-video-skills/tree/main/skills/painted-animation"
-    },
-    {
-      "name": "kinetic-reel",
-      "description": "Kinetic-typography motion reels: bold condensed type, HUD micro-type, three.js generative layers, shape-continuity transitions and a synthesized beat-locked score.",
-      "source": "./",
-      "strict": false,
-      "skills": ["./skills/kinetic-reel"],
-      "category": "design",
-      "keywords": ["motion-graphics", "kinetic-typography", "showreel", "threejs", "webgl"],
-      "homepage": "https://github.com/tuzhechen2005/opus-video-skills/tree/main/skills/kinetic-reel"
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: painted-animation
-description: Make hand-painted watercolour-and-ink cartoon videos (MP4) with code — p5.js + p5.brush rendered frame by frame in headless Chrome, encoded with ffmpeg — starring Clawd or any character. Use when the user asks to make an animation, animated short, cartoon, music video, lyric video, animated GIF/loop or "a video of Clawd…", or mentions the PDoomVideo / ClaudeAnimationBase approach. Covers storyboarding, the engine API, the render-and-look review loop, music/lyric sync and splitting long videos across subagents.
+description: Make hand-painted watercolour-and-ink cartoon videos (MP4) with code — p5.js + p5.brush rendered frame by frame in headless Chrome, encoded with ffmpeg — starring Clawd or any character. Use when the user asks to make an animation, animated short, cartoon, music video, lyric video, animated GIF/loop or "a video of Clawd…", or mentions the PDoomVideo / ClaudeAnimationBase approach. Covers storyboarding, the engine API, music and LRC lyric sync, cloud-friendly preview review, and choosing local or cloud rendering for the final video.
 ---
 
 # Painted animation
@@ -19,13 +19,20 @@ bash ~/.claude/skills/painted-animation/scripts/new_project.sh <project-dir>    
 
 This copies the template, unhooks the demo scene, runs `npm install` and checks node / ffmpeg / Chrome. Then **read `<project-dir>/ANIMATION_GUIDE.md` in full** before designing anything: it holds the rules, the animation principles and the complete engine / Clawd API. Look at `docs/emotions.jpg` and `docs/views.jpg` (the model sheets) with the Read tool.
 
-For a music video or anything longer than ~20 s, also read [references/music-video.md](references/music-video.md). For a lyric video, ask for the song file and an LRC first, and measure the tempo with `scripts/beat_grid.py`: lines are usually faster than you'd guess.
+For a music video or anything longer than ~20 s, also read [references/music-video.md](references/music-video.md).
+
+For every music video, complete this intake before storyboarding or scene implementation:
+
+1. Ask the user to provide both the song audio file and its `.lrc` lyric file. Do not invent, transcribe or approximate missing lyrics when an LRC is expected.
+2. Ask the user to describe the song's rough story and intended mood or imagery. Invite concise answers: who or what the song is about, its emotional arc, setting, visual motifs, and any images or plot points they want included or avoided.
+3. Confirm the received files and summarize the creative direction back to the user. If either required file or the creative direction is missing, pause the music-video workflow and request it.
+4. Measure the tempo with `scripts/beat_grid.py`; lyric lines are usually faster than you'd guess. Treat the provided audio and LRC as the timing source of truth.
 
 ### 1. Storyboard before code
 
 Write `STORYBOARD.md` in the project (format in the guide: logline, world + palette arc, motif, the character's emotion arc, then shots with **reads** — the timed list of what the viewer must understand). Worked example: [examples/xiaozhen/](examples/xiaozhen/) (a 31 s lyric video: storyboard and full scene code).
 
-Show the storyboard to the user and let them react before building, unless they said to just go ahead.
+For a music video, turn the user's story and mood into a coherent visual narrative and emotional arc rather than illustrating each lyric literally. Show the storyboard to the user and let them react before building, unless they said to just go ahead.
 
 ### 2. Build shot by shot
 
@@ -45,7 +52,15 @@ node render.mjs --sheet=2.3 --crop=760,420,500,400 --w=500 --out=out/check/face.
 
 Open each image with Read and actually check it against the guide's review list: event clear? character big enough? reads timed so a first-time viewer gets them? anticipation / follow-through, no snaps? feet and held props touching? transitions at every seam? no text, no 3D, no pure black/white, no muddy glows? Fix and look again. Budget: ≥ 1 sheet per shot, a strip per key motion and transition, a crop per story-carrying face.
 
+Contact sheets, stills, short strips and other few-frame previews may be rendered and reviewed in the current cloud environment. Keep these preview renders deliberately small and targeted; they are for visual validation, not a substitute for rendering the whole video.
+
 ### 4. Render the video
+
+Before starting a full-frame render, tell the user that complete cloud rendering can be very slow and ask whether they want to render the final video locally instead.
+
+- If the user chooses local rendering, do not render the full sequence in the cloud. Finish the validated project files, check the local prerequisites, and provide the exact `npm install`, frame-render and encode commands for their platform. Keep preview images available so the user knows what was approved.
+- If the user chooses cloud rendering, confirm the expected duration, frame count and likely cost/time, then proceed with the resumable multi-worker render.
+- Do not infer the choice from earlier approval of a storyboard or preview. Ask explicitly at the final-render boundary.
 
 ```bash
 node render.mjs --clip --out=out/video.mp4                                   # short videos, one worker
