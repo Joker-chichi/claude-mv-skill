@@ -51,10 +51,11 @@ P(doom)'s second generation was painted by parallel subagents, one per chapter, 
 
 ## 5. Rendering a long video
 
-Do not start the full-frame render merely because the storyboard or cloud previews were approved. At this final-render boundary, explicitly tell the user that a complete cloud render can be very slow and ask them to choose local or cloud rendering.
+Never start a complete render directly. Storyboard approval, cloud-preview approval, or a general request to continue is not render authorization. At the final-render boundary, explicitly tell the user that a complete cloud render can be very slow, ask them to choose local or cloud rendering, and wait for an unambiguous answer.
 
-- **Local:** do not run the full render in the cloud. Confirm the user's operating system and local Node.js, Chrome and ffmpeg prerequisites, then provide the exact install, frame-render and encode commands for that platform.
+- **Local:** cloud full rendering is prohibited unless the user later explicitly changes their choice. Do not run the full render in the cloud. Confirm the user's operating system and local Node.js, Chrome and ffmpeg prerequisites, then provide the exact install, frame-render and encode commands for that platform.
 - **Cloud:** state the video duration, total frame count and an estimated render time or cost, then wait for explicit confirmation before running the commands below.
+- **Missing or ambiguous answer:** do not render; ask again for an explicit local-or-cloud choice.
 
 Only after the user chooses cloud rendering, run:
 

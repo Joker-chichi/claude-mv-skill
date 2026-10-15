@@ -24,8 +24,8 @@ For a music video or anything longer than ~20 s, also read [references/music-vid
 For every music video, complete this intake before storyboarding or scene implementation:
 
 1. Ask the user to provide both the song audio file and its `.lrc` lyric file. Do not invent, transcribe or approximate missing lyrics when an LRC is expected.
-2. Ask the user to describe the song's rough story and intended mood or imagery. Invite concise answers: who or what the song is about, its emotional arc, setting, visual motifs, and any images or plot points they want included or avoided.
-3. Confirm the received files and summarize the creative direction back to the user. If either required file or the creative direction is missing, pause the music-video workflow and request it.
+2. Always ask for the creative direction, even if the user has already mentioned part of it. Present a short fill-in form in the user's language with these five fields: **story**, **emotion**, **atmosphere / imagery**, **visual motif**, and **content to avoid**. Explicitly say that every field is optional and may be left blank.
+3. Confirm the received files and summarize both the supplied preferences and the blank fields. Treat a blank creative field as "no preference", not as missing input; propose an appropriate interpretation during storyboarding. If the audio or LRC file is missing, pause the music-video workflow and request it.
 4. Measure the tempo with `scripts/beat_grid.py`; lyric lines are usually faster than you'd guess. Treat the provided audio and LRC as the timing source of truth.
 
 ### 1. Storyboard before code
@@ -56,11 +56,11 @@ Contact sheets, stills, short strips and other few-frame previews may be rendere
 
 ### 4. Render the video
 
-Before starting a full-frame render, tell the user that complete cloud rendering can be very slow and ask whether they want to render the final video locally instead.
+Never start a complete render directly. After preview review is finished, tell the user that complete cloud rendering can be very slow and ask explicitly whether they want the final video rendered locally or in the cloud. Wait for their answer; storyboard approval, preview approval, or a previous general instruction to proceed is not render authorization.
 
-- If the user chooses local rendering, do not render the full sequence in the cloud. Finish the validated project files, check the local prerequisites, and provide the exact `npm install`, frame-render and encode commands for their platform. Keep preview images available so the user knows what was approved.
+- If the user chooses local rendering, cloud full rendering is prohibited. Do not start the full sequence in the cloud unless the user later explicitly changes their choice. Finish the validated project files, ask for the local operating system if unknown, and provide the exact prerequisite, `npm install`, frame-render and encode commands for that platform. Keep preview images available so the user knows what was approved.
 - If the user chooses cloud rendering, confirm the expected duration, frame count and likely cost/time, then proceed with the resumable multi-worker render.
-- Do not infer the choice from earlier approval of a storyboard or preview. Ask explicitly at the final-render boundary.
+- If the user does not answer or gives an ambiguous answer, do not run a complete render. Ask again for an explicit local-or-cloud choice.
 
 ```bash
 node render.mjs --clip --out=out/video.mp4                                   # short videos, one worker

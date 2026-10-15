@@ -20,10 +20,10 @@ The method is derived from two projects by John Heibel: [PDoomVideo](https://git
 
 ## How It Works
 
-1. **Intake and storyboard.** For a music video, Claude first requests the audio, LRC lyrics, and the user's description of the song's story and mood. It then writes a shot list covering setting, palette, character arc and transitions. For each shot it lists the "reads", the timed sequence of what the viewer must understand.
+1. **Intake and storyboard.** For a music video, Claude first requests the audio and LRC lyrics, then presents an optional fill-in form for story, emotion, atmosphere / imagery, visual motif and content to avoid. Any creative field may be left blank. It then writes a shot list covering setting, palette, character arc and transitions. For each shot it lists the "reads", the timed sequence of what the viewer must understand.
 2. **Drawing.** Each shot is a JavaScript function that paints the complete frame with p5.js and the [p5.brush](https://github.com/acamposuribe/p5.brush) watercolour library. Every frame is a pure function of time.
 3. **Review.** Small contact sheets, frame strips and close-up crops may be rendered in the cloud. Claude inspects the images and revises the code until each shot meets the guidelines.
-4. **Output.** Before the complete render, Claude asks whether to render locally or continue in the cloud. Frames are rendered in parallel and encoded to MP4 with ffmpeg, with audio muxed in if provided.
+4. **Output.** Claude never starts a complete render without asking whether to render locally or in the cloud. Choosing local prohibits cloud full rendering and produces exact local commands instead. Frames are rendered in parallel and encoded to MP4 with ffmpeg, with audio muxed in if provided.
 
 ## Characteristics
 
