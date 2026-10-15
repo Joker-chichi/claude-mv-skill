@@ -55,7 +55,7 @@ Describe the video in Claude Code. The matching skill is selected automatically,
 
 > Make a 15-second video of Clawd trying to catch a butterfly.
 
-For a music video, provide the song audio and an LRC lyric file, then optionally fill in the story, emotion, atmosphere / imagery, visual motif and content to avoid. The skill scaffolds a project, presents a storyboard, and reviews every shot. It never starts the complete final render without asking for an explicit local-or-cloud choice; choosing local prohibits cloud full rendering and returns exact local commands.
+For a music video, provide the song audio and an LRC lyric file, then optionally answer one combined question about the desired story and feeling, recurring imagery and anything to avoid. The question is never split into five fields and may be left blank. The skill scaffolds a project, presents a storyboard, and reviews every shot. It never starts the complete final render without asking for an explicit local-or-cloud choice; choosing local prohibits cloud full rendering and returns exact local commands.
 
 ## Repository Structure
 
